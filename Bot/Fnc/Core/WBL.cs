@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Wind_up_Zeno.Emote;
 
 namespace Wind_up_Zeno
 {
@@ -17,6 +19,7 @@ namespace Wind_up_Zeno
             var author = message.Author;
             if (author.IsBot) { return; }
 
+            await LogExtra($"Bad Words: Start message-{message.Id}");
 
             string msgcontent = message.Content.ToLower();
 
@@ -41,6 +44,9 @@ namespace Wind_up_Zeno
                     break; //one is enough
                 }
             }
+
+            await LogExtra($"Bad Words: End message-{message.Id}");
+
 
         }
 

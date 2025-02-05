@@ -12,11 +12,11 @@ namespace Wind_up_Zeno
         {
             try
             {
-                await Log($"Offline: {ex.Message}");
+                await Log($"Disconnected. Reason: {ex.Message}");
             }
             catch (Exception exe)
             {
-                await Log(exe.ToString());
+                await LogError(exe.ToString());
             }
         }
     }

@@ -62,10 +62,12 @@ namespace Wind_up_Zeno
             else
             {
                 await Log($"An update has detected => Version: {Application.ProductVersion}");
+                await LogDebug($"New shortcurt was created: {fullpath}");
                 var files = Directory.GetFiles(folderpath);
                 foreach (var item in files)
                 {
                     if (item.Contains("Zeno")) File.Delete(item);
+                    await LogExtra($"File: {item} delted.");
                 }
 
                 return true;

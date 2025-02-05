@@ -9,8 +9,8 @@ namespace Wind_up_Zeno
 {
     public partial class Zeno
     {
-        public bool cacisstop = false;
-        public static bool lnisstop = false;
+        public bool Cacisstop = false;
+        public static bool Lnisstop { get; set; } = false;
 
         public async Task StopBot()
         {
@@ -20,9 +20,10 @@ namespace Wind_up_Zeno
                 await Bot_Zeno.StopAsync();
                 StopXIVLN();
                 CacpotRunning = false;
-                while (!cacisstop && !lnisstop) { await Task.Delay(500); }
-                await LogForm("Bot Stoped.");
+                await LogForm("Waiting for background tasks to end...");
+                while (!Cacisstop || !Lnisstop) { await Task.Delay(500); }
                 UpdateControls();
+                await LogForm($"Bot totally off");
             }
             catch (Exception )
             {

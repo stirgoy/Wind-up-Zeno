@@ -10,6 +10,12 @@ namespace Wind_up_Zeno
 
         public async Task RunBot()
         {
+            if (!Config.RunBot)
+            {
+                await LogError("Bot connection is dissabled: RunBot => false");
+                return;
+            }
+
             await Log("Checking login Token...");
 #if DEBUG
             string token = Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User);

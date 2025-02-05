@@ -34,11 +34,20 @@ namespace Wind_up_Zeno
     }
 
 
-    public partial class UserForm : Form
+    public partial class UserForm
     {
         //params
         public SocketGuildUser User { get; set; }
         //new line
         string NL => Environment.NewLine;
     }
+
+    public partial class AddRoleForm
+    {
+        //params
+        public SocketGuildUser User { get; set; }
+        //new line
+        string NL => Environment.NewLine;
+    }
+
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Wind_up_Zeno
 {
@@ -14,18 +10,20 @@ namespace Wind_up_Zeno
 
             public bool XIV_LN_enabled { get; set; } = true;
             public bool BadWordsBlackList { get; set; } = true;
-            public bool ZenoLog { get; set; } = true;
-            public bool ConsoleLog { get; set; } = true;
+            public bool ZenoLog { get; set; } = true; //why disable?
+            public bool ConsoleLog { get; set; } = true; //same
             public bool RunBot { get; set; } = true;
-            public bool AutoStart { get; set; } = false;
+            public bool AutoStart { get; set; } = false; //app behabior
             public bool UpdateSlashCommands { get; set; } = true;
-            public int MaxReconnections { get; set; } = 1; //auto reset app
+            public int MaxReconnections { get; set; } = 1; //outdated
             public string Playing { get; set; } = "";
             public NewsIds Ids { get; set; }
             public KuruCFG Channels { get; set; }
             public StringCollection CacpotIds { get; set; } = new StringCollection() { };
             public string LastCacpot { get; set; } = "";
             public List<string[]> Events_Noticed { get; set; } = new List<string[]>(); //will save event = 0 users = rest
+            public int[] FF_Schedules { get; set; } = new int[4] { 7, 15, 19, 19 };
+            public int CacpotLoopDelay { get; set; } = 5000;
 
         }
 

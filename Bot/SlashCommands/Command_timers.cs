@@ -12,8 +12,8 @@ namespace Wind_up_Zeno
             await command.DeferAsync(ephemeral: false);
 
             DateTime ahora = DateTime.Now;
-            bool isDST = !ahora.IsDaylightSavingTime();
             /*
+            bool isDST = !ahora.IsDaylightSavingTime();//only on fishing plz update it and remove DST
             //dst handler
             int weekly_hour = isDST ? 10 : 9;
             int daily_hour = isDST ? 17 : 16;
@@ -21,10 +21,10 @@ namespace Wind_up_Zeno
             //int Cac_hour = isDST ? 19 : 19;
             */
             //UTC hours
-            const int weekly_hour = 8;
-            const int daily_hour = 15;
-            const int GC_hour = 20;
-            const int Cac_hour = 19;
+            int weekly_hour = Config.FF_Schedules[0];
+            int daily_hour = Config.FF_Schedules[1];
+            int GC_hour = Config.FF_Schedules[2];
+            int Cac_hour = Config.FF_Schedules[3];
 
             // Weekly timer
             DateTime weekly = new DateTime(ahora.Year, ahora.Month, ahora.Day, weekly_hour, 0, 0,DateTimeKind.Utc)
@@ -49,17 +49,10 @@ namespace Wind_up_Zeno
             string gcDT = $"<t:{unixG}:R>";
 
             // Ocean Fishing timer
-            DateTime ocean;
-            if (isDST)
-            { //pair
-                ocean = new DateTime(ahora.Year, ahora.Month, ahora.Day, ahora.Hour, 0, 0, DateTimeKind.Utc).AddHours(2 - (ahora.Hour % 2));
-            }
-            else
-            { //unpair
-                ocean = new DateTime(ahora.Year, ahora.Month, ahora.Day, ahora.Hour, 0, 0, DateTimeKind.Utc).AddHours(ahora.Hour % 2 == 0 ? 1 : 2);
-            }
-
-            long unixO = new DateTimeOffset(ocean).ToUnixTimeSeconds();
+            DateTime ocean = DateTime.UtcNow;
+            ocean = new DateTime(ocean.Year, ocean.Month, ocean.Day, ocean.Hour, 0, 0, DateTimeKind.Utc).AddHours(2 - (ocean.Hour % 2)); // ever pair on utc :3
+            DateTimeOffset oceanos = ocean.ToLocalTime();
+            long unixO = oceanos.ToUnixTimeSeconds();
             string oceanDT = $"<t:{unixO}:R>";
 
             // Cacpot Lottery timer

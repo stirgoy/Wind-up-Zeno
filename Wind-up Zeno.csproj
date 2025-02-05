@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <ApplicationVersion>1.0.1.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -140,6 +140,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddRoleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddRoleForm.Designer.cs">
+      <DependentUpon>AddRoleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bot\SlashCommands\Command_a_status.cs" />
+    <Compile Include="Program\CloseMe.cs" />
     <Compile Include="Program\AppUpdate.cs" />
     <Compile Include="Bot\Fnc\Form\Autostart.cs" />
     <Compile Include="Bot\Fnc\Commands\AddBadWord.cs" />
@@ -182,7 +190,7 @@
     <Compile Include="Bot\Cacpot.cs" />
     <Compile Include="Bot\Fnc\Core\Classroom.cs" />
     <Compile Include="Bot\Fnc\Form\IsOnline.cs" />
-    <Compile Include="Core.cs" />
+    <Compile Include="Program\Core.cs" />
     <Compile Include="Bot\Fnc\Commons\CreateEmbed.cs" />
     <Compile Include="Bot\Classes\Bot\Emote.cs" />
     <Compile Include="Bot\Fnc\SlashCommands\FFMaintenanceTalk.cs" />
@@ -252,6 +260,23 @@
     <Compile Include="Forms\UserForm.Designer.cs">
       <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program\SendMessage.cs" />
+    <Compile Include="Program\ZenoInstance.cs" />
+    <Compile Include="Forms\RolesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RolesForm.Designer.cs">
+      <DependentUpon>RolesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SchedulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SchedulesForm.Designer.cs">
+      <DependentUpon>SchedulesForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\AddRoleForm.resx">
+      <DependentUpon>AddRoleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +323,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\RolesForm.resx">
+      <DependentUpon>RolesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SchedulesForm.resx">
+      <DependentUpon>SchedulesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="zeno.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

@@ -36,5 +36,11 @@ namespace Wind_up_Zeno
         {
             await Print(message, LogSeverity.Info);
         }
+
+        public static async Task LogExtra(string message)
+        {
+            if (!Core.ExtraLog) return;
+            await Print(message, LogSeverity.Info);
+        }
     }
 }

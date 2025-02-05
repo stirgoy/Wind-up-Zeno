@@ -45,7 +45,7 @@ namespace Wind_up_Zeno
         //autorole
         private readonly ulong Role_sproud = 1326212765928656977;
         private readonly ulong Role_normal = 1285702794078191616;
-        private readonly ulong Channel_hi = 1326510690982170646; //welcome
+        private readonly ulong Channel_hi = 1326510690982170646;        //welcome
         private readonly ulong Channel_greetings = 1310199196233760858; //test bot 
         private readonly ulong Channel_zenos = 1310199196233760858;
 

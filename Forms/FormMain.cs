@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Wind_up_Zeno
 {
@@ -14,11 +15,7 @@ namespace Wind_up_Zeno
         public FormMain()
         {
             InitializeComponent();
-
         }
-
-
-        
 
         private async void Form1_Load(object sender, EventArgs e)
         {
@@ -26,40 +23,11 @@ namespace Wind_up_Zeno
             NI.Icon = Icon;
             NI.Visible = true;
             NI.Text = Text;
+
+
+
             //bot instance
-            Core.Bot = new Zeno
-            {
-                //TxtLog delegate
-                OnLog = (message) =>
-                {
-                    if (!IsHandleCreated || Disposing || IsDisposed) return;
-
-                    BeginInvoke(new Action(() =>
-                    {
-                        if (Disposing || IsDisposed) return;
-
-                        try
-                        {
-
-                            if (TxtLog != null)
-                            {
-                                TxtLog.AppendText($"{Timestamp} · {message} \r\n");
-
-                                string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Zeno";
-                                if (!Directory.Exists($"{path}\\Logs")) { Directory.CreateDirectory($"{path}\\Logs"); }
-                                string f = DateTime.Now.ToString("ddMM");
-                                File.AppendAllText($"{path}\\Logs\\{f}", $"{message}{NL}");
-
-                            }
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-                    }));
-                }
-            };
-
+            ZenoInstance();
 
             await Core.Bot.LogForm("Loading Bot Zeno...");
 
@@ -74,24 +42,28 @@ namespace Wind_up_Zeno
 
         private async void FormMain_Shown(object sender, EventArgs e)
         {
-            await Core.Bot.LogForm("Form is loaded.");
+#if DEBUG
+            Text += " 🛠 (BEDUG)";
+            BtnToggle_Click(sender, e);
+#endif
+            await Core.Bot.LogForm("Checking auto start...");
 
             if (ChkAutostart.Checked)
             {
-                BtnStart.Enabled = false;
-                await Core.Bot.RunBot();
+                BtnStart_Click(sender, e);
             }
         }
 
         private async void BtnStop_Click(object sender, EventArgs e)
         {
+            BtnStop.Enabled= false;
             await Core.Bot.StopBot();
             //ButtonStatus();
         }
 
         private async void BtnStart_Click(object sender, EventArgs e)
         {
-
+            BtnStart.Enabled = false;
             await Core.Bot.RunBot();
         }
 
@@ -126,83 +98,16 @@ namespace Wind_up_Zeno
             {
                 if (LstUsers.Items[LstUsers.SelectedIndex] is SocketGuildUser cuser)
                 {
-                    BtnUserForm.Text = $"{cuser}";
+                    BtnUserForm.Text = $"{cuser.DisplayName}/{cuser}";
                     TxtMentionUser.Text = cuser.Mention;
                 }
             }
         }
 
 
-        private async void BtnSendMsg_Click(object sender, EventArgs e)
+        private void BtnSendMsg_Click(object sender, EventArgs e)
         {
-            string m = "";
-            bool run = true;
-            if (!ChkSendTo.Checked)
-            {
-
-                if (LstUsers.Items.Count <= 0)
-                {
-                    m = "There is no users for send message.";
-                    run = false;
-                }
-                else if (LstUsers.SelectedIndex == -1)
-                {
-                    m = "You need to select any user from list";
-                    run = false;
-                }
-                else if (TxtMsg.Text == "")
-                {
-                    m = "Message can't be empty";
-                    run = false;
-                }
-
-                if (run)
-                {
-                    if (LstUsers.Items[LstUsers.SelectedIndex] != null)
-                    {
-                        var u = LstUsers.Items[LstUsers.SelectedIndex] as SocketGuildUser;
-                        var dm = await u.CreateDMChannelAsync();
-                        await dm.SendMessageAsync(TxtMsg.Text);
-                        await Core.Bot.LogForm($"Message sent from app to {u.DisplayName}");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(m, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                if (LstChannels.Items.Count <= 0)
-                {
-                    m = "There is no channels for send message.";
-                    run = false;
-                }
-                else if (LstChannels.SelectedIndex == -1)
-                {
-                    m = "You need to select any channel from list";
-                    run = false;
-                }
-                else if (TxtMsg.Text == "")
-                {
-                    m = "Message can't be empty";
-                    run = false;
-                }
-
-                if (run)
-                {
-                    if (LstChannels.Items[LstChannels.SelectedIndex] != null)
-                    {
-                        var c = LstChannels.Items[LstChannels.SelectedIndex] as SocketTextChannel;
-                        await c.SendMessageAsync(TxtMsg.Text);
-                        await Core.Bot.LogForm($"Message sent from app to {c.Name}");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(m, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            SendMessage();
         }
 
         private void ChkAutostart_CheckedChanged(object sender, EventArgs e)
@@ -245,14 +150,7 @@ namespace Wind_up_Zeno
             }
         }
 
-        private async Task CloseMe()
-        {
-            AbleToClose = true;
-            if (Core.Bot.IsOnline() == ConnectionState.Connected) await Core.Bot.StopBot();
-            NI.Visible = false;
-            Close();
-
-        }
+        
 
         private void LstChannels_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -281,6 +179,11 @@ namespace Wind_up_Zeno
         {
             Clipboard.SetText(TxtRM.Text);
         }
+
+        private void BtnCopyE_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(TxtEmotes.Text);
+        }
         private void BtnAddU_Click(object sender, EventArgs e)
         {
             TxtMsg.Text += TxtMentionUser.Text;
@@ -296,6 +199,11 @@ namespace Wind_up_Zeno
             TxtMsg.Text += TxtRM.Text;
         }
 
+        private void BtnAddE_Click(object sender, EventArgs e)
+        {
+            TxtMsg.Text += TxtEmotes.Text;
+        }
+
         private void LstRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (LstRoles.Items.Count > 0)
@@ -305,16 +213,6 @@ namespace Wind_up_Zeno
                     TxtRM.Text = (LstRoles.Items[LstRoles.SelectedIndex] as SocketRole).Mention;
                 }
             }
-        }
-
-        private void BtnCopyE_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(TxtEmotes.Text);
-        }
-
-        private void BtnAddE_Click(object sender, EventArgs e)
-        {
-            TxtMsg.Text += TxtEmotes.Text;
         }
 
         private async void BtnStatus_Click(object sender, EventArgs e)
@@ -399,6 +297,23 @@ namespace Wind_up_Zeno
                 MessageBox.Show("For import configuration bot need be offline.", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
 
+        }
+
+        private void ChkExtraLog_CheckedChanged(object sender, EventArgs e)
+        {
+            Core.ExtraLog = ChkExtraLog.Checked;
+        }
+
+        private void BtnRoles_Click(object sender, EventArgs e)
+        {
+            var formrole = new RolesForm();
+            formrole.ShowDialog();
+        }
+
+        private void BtnSchedulesForm_Click(object sender, EventArgs e)
+        {
+            var formrole = new SchedulesForm();
+            formrole.ShowDialog();
         }
     }
 

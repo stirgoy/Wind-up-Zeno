@@ -198,6 +198,17 @@ namespace Wind_up_Zeno
                 .WithDescription(StringT.Scd_warn)
                 .Build(),
 
+            new SlashCommandBuilder()
+                .WithName("a_status")
+                .WithDescription(StringT.Scd_searchoutfit)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("status")
+                    .WithDescription(StringT.Scd_searchoutfit_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
 
 
             /* 
@@ -270,6 +281,7 @@ namespace Wind_up_Zeno
                 .WithName("botinfo")
                 .WithDescription(StringT.Scd_botinfo)
                 .Build()
+
 
             
             /* ff notices, updates.....

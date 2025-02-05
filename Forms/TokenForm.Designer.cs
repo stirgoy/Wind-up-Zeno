@@ -79,11 +79,13 @@
             this.Controls.Add(this.TxtToken);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TokenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Token";
+            this.Load += new System.EventHandler(this.TokenForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

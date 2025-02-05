@@ -25,19 +25,20 @@ namespace Wind_up_Zeno
 
         public void StopXIVLN()
         {
-            XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite);            
+            XIV_Timer.Dispose();
         }
 
         static async void XIV_LN_Loop(object state)
         {
             try
             {
-                lnisstop = false;
+                Lnisstop = false;
                 XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite); //stop timer
 
                 HttpClient H_Client = new HttpClient();
 
-                await Log("XIVLN calling API...");
+                await LogExtra("XIVLN calling API...");
                 //lets call api each 2 sec
                 string jsonTopics = await H_Client.GetStringAsync(XIVLN.APIs.Topics);
                 await Task.Delay(XIVLN.Config.APIDelay);
@@ -50,7 +51,7 @@ namespace Wind_up_Zeno
                 string jsonMaintenance = await H_Client.GetStringAsync(XIVLN.APIs.Maintenance);
                 await Task.Delay(XIVLN.Config.APIDelay);
                 string jsonMaintenance_Current = await H_Client.GetStringAsync(XIVLN.APIs.MaintenanceCurrent);
-                await Log("XIVLN data recieved.");
+                await LogExtra("XIVLN data recieved.");
 
                 bool have_Topics = !(string.IsNullOrEmpty(jsonTopics));
                 bool have_Status = !(string.IsNullOrEmpty(jsonStatus));
@@ -59,8 +60,8 @@ namespace Wind_up_Zeno
                 bool have_Maintenance = !(string.IsNullOrEmpty(jsonMaintenance));
                 bool have_Maintenance_Current = !(string.IsNullOrEmpty(jsonMaintenance_Current));
 
-                lnisstop = false;
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true;  await Log("XIVLN stoped."); return; }
+                //lnisstop = false;
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true;  await Log("XIVLN stoped."); return; }
                 //  --Topics--
                 if (have_Topics)
                 {
@@ -119,7 +120,7 @@ namespace Wind_up_Zeno
                 }
 
 
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true; await Log("XIVLN stoped."); return; }
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true; await Log("XIVLN stoped."); return; }
                 //  --Status--
                 if (have_Status)
                 {
@@ -173,7 +174,7 @@ namespace Wind_up_Zeno
                     }
                 }
 
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true; await Log("XIVLN stoped."); return; }
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true; await Log("XIVLN stoped."); return; }
                 //  --Updates--
                 if (have_Updates)
                 {
@@ -229,7 +230,7 @@ namespace Wind_up_Zeno
 
                 }
 
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true; await Log("XIVLN stoped."); return; }
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true; await Log("XIVLN stoped."); return; }
                 //  --Notices--
                 if (have_Notices)
                 {
@@ -285,7 +286,7 @@ namespace Wind_up_Zeno
                     }
                 }
 
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true; await Log("XIVLN stoped."); return; }
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true; await Log("XIVLN stoped."); return; }
                 //  --Maintenance--
                 if (have_Maintenance)
                 {
@@ -341,7 +342,7 @@ namespace Wind_up_Zeno
                 }
 
                 //-------------------------------------- Maintenance Current
-                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { lnisstop = true; await Log("XIVLN stoped."); return; }
+                if (Bot_Zeno.ConnectionState != ConnectionState.Connected) { Lnisstop = true; await Log("XIVLN stoped."); return; }
                 //  --Game--
                 if (have_Maintenance_Current)
                 {
@@ -561,6 +562,7 @@ namespace Wind_up_Zeno
 
                 }
 
+                await LogExtra($"XIVLN next check on: {XIVLN.Config.TimerInterval} ms");
 
                 XIV_Timer.Change(XIVLN.Config.TimerInterval, Timeout.Infinite); //reset timer
 
@@ -570,8 +572,13 @@ namespace Wind_up_Zeno
                 await LogError(ex.Message);
                 XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite);
                 Config.XIV_LN_enabled = false;
-                lnisstop = true;
+                Lnisstop = true;
             }
+
+            XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            Config.XIV_LN_enabled = false;
+            Lnisstop = true;
+
         }
 
     }

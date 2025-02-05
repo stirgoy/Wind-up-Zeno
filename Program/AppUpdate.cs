@@ -30,6 +30,10 @@ namespace Wind_up_Zeno
 
             BtnUserForm.Text = "";
             TxtStatus.Text = "";
+            TxtMentionUser.Text = "";
+            TxtMentionChannel.Text = "";
+            TxtEmotes.Text = "";
+            TxtRM.Text = "";
             LblCacpot.Text = "Offline";
 
             if (online)
@@ -66,6 +70,7 @@ namespace Wind_up_Zeno
             BtnAddC.Enabled = online;
             BtnCopyMC.Enabled = online;
             BtnCopyUM.Enabled = online;
+            BtnRoles.Enabled = online;
 
         }
 

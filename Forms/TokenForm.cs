@@ -23,6 +23,7 @@ namespace Wind_up_Zeno
 
                 if (TxtToken.Text != "")
                 {
+                    BtnOk.Enabled = false;
 #if DEBUG
                     Environment.SetEnvironmentVariable("ZenosT", TxtToken.Text, EnvironmentVariableTarget.User);
 #else
@@ -35,6 +36,11 @@ namespace Wind_up_Zeno
             {
                 await Core.Bot.LogForm(ex.Message);
             }
+        }
+
+        private void TokenForm_Load(object sender, EventArgs e)
+        {
+            Icon = Program.ZenoForm.Icon;
         }
     }
 }

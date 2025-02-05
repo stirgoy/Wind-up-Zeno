@@ -74,6 +74,9 @@
             this.BtnToggle = new System.Windows.Forms.Button();
             this.BtnImport = new System.Windows.Forms.Button();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
+            this.ChkExtraLog = new System.Windows.Forms.CheckBox();
+            this.BtnRoles = new System.Windows.Forms.Button();
+            this.BtnSchedulesForm = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -130,9 +133,9 @@
             // BtnUpdateLists
             // 
             this.BtnUpdateLists.Enabled = false;
-            this.BtnUpdateLists.Location = new System.Drawing.Point(12, 204);
+            this.BtnUpdateLists.Location = new System.Drawing.Point(12, 225);
             this.BtnUpdateLists.Name = "BtnUpdateLists";
-            this.BtnUpdateLists.Size = new System.Drawing.Size(119, 44);
+            this.BtnUpdateLists.Size = new System.Drawing.Size(119, 23);
             this.BtnUpdateLists.TabIndex = 4;
             this.BtnUpdateLists.Text = "Update lists";
             this.BtnUpdateLists.UseVisualStyleBackColor = true;
@@ -140,9 +143,9 @@
             // 
             // BtnLogs
             // 
-            this.BtnLogs.Location = new System.Drawing.Point(1134, 11);
+            this.BtnLogs.Location = new System.Drawing.Point(274, 225);
             this.BtnLogs.Name = "BtnLogs";
-            this.BtnLogs.Size = new System.Drawing.Size(75, 24);
+            this.BtnLogs.Size = new System.Drawing.Size(75, 23);
             this.BtnLogs.TabIndex = 5;
             this.BtnLogs.Text = "Logs folder";
             this.BtnLogs.UseVisualStyleBackColor = true;
@@ -150,7 +153,7 @@
             // 
             // BtnData
             // 
-            this.BtnData.Location = new System.Drawing.Point(1053, 11);
+            this.BtnData.Location = new System.Drawing.Point(1166, 3);
             this.BtnData.Name = "BtnData";
             this.BtnData.Size = new System.Drawing.Size(75, 24);
             this.BtnData.TabIndex = 5;
@@ -480,21 +483,21 @@
             // 
             // BtnToggle
             // 
-            this.BtnToggle.Location = new System.Drawing.Point(1224, 11);
+            this.BtnToggle.Location = new System.Drawing.Point(1247, 3);
             this.BtnToggle.Name = "BtnToggle";
-            this.BtnToggle.Size = new System.Drawing.Size(104, 24);
+            this.BtnToggle.Size = new System.Drawing.Size(81, 24);
             this.BtnToggle.TabIndex = 33;
-            this.BtnToggle.Text = "Toggle controls";
+            this.BtnToggle.Text = "Toggle Extra";
             this.BtnToggle.UseVisualStyleBackColor = true;
             this.BtnToggle.Click += new System.EventHandler(this.BtnToggle_Click);
             // 
             // BtnImport
             // 
-            this.BtnImport.Location = new System.Drawing.Point(933, 11);
+            this.BtnImport.Location = new System.Drawing.Point(1154, 33);
             this.BtnImport.Name = "BtnImport";
             this.BtnImport.Size = new System.Drawing.Size(101, 24);
             this.BtnImport.TabIndex = 34;
-            this.BtnImport.Text = "Import bo data";
+            this.BtnImport.Text = "Import bot data";
             this.BtnImport.UseVisualStyleBackColor = true;
             this.BtnImport.Click += new System.EventHandler(this.BtnImport_Click);
             // 
@@ -503,14 +506,49 @@
             this.OFD.FileName = "kuru.json";
             this.OFD.Filter = "Bot config file|kuru.json";
             // 
+            // ChkExtraLog
+            // 
+            this.ChkExtraLog.AutoSize = true;
+            this.ChkExtraLog.Location = new System.Drawing.Point(187, 38);
+            this.ChkExtraLog.Name = "ChkExtraLog";
+            this.ChkExtraLog.Size = new System.Drawing.Size(67, 17);
+            this.ChkExtraLog.TabIndex = 35;
+            this.ChkExtraLog.Text = "Extra log";
+            this.ChkExtraLog.UseVisualStyleBackColor = true;
+            this.ChkExtraLog.CheckedChanged += new System.EventHandler(this.ChkExtraLog_CheckedChanged);
+            // 
+            // BtnRoles
+            // 
+            this.BtnRoles.Enabled = false;
+            this.BtnRoles.Location = new System.Drawing.Point(138, 225);
+            this.BtnRoles.Name = "BtnRoles";
+            this.BtnRoles.Size = new System.Drawing.Size(75, 23);
+            this.BtnRoles.TabIndex = 36;
+            this.BtnRoles.Text = "Roles";
+            this.BtnRoles.UseVisualStyleBackColor = true;
+            this.BtnRoles.Click += new System.EventHandler(this.BtnRoles_Click);
+            // 
+            // BtnSchedulesForm
+            // 
+            this.BtnSchedulesForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSchedulesForm.Location = new System.Drawing.Point(1088, 4);
+            this.BtnSchedulesForm.Name = "BtnSchedulesForm";
+            this.BtnSchedulesForm.Size = new System.Drawing.Size(70, 23);
+            this.BtnSchedulesForm.TabIndex = 37;
+            this.BtnSchedulesForm.Text = "Settings ⚙️";
+            this.BtnSchedulesForm.UseVisualStyleBackColor = true;
+            this.BtnSchedulesForm.Click += new System.EventHandler(this.BtnSchedulesForm_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1333, 541);
+            this.Controls.Add(this.TxtLog);
+            this.Controls.Add(this.BtnSchedulesForm);
+            this.Controls.Add(this.ChkExtraLog);
             this.Controls.Add(this.BtnImport);
             this.Controls.Add(this.BtnToggle);
-            this.Controls.Add(this.TxtLog);
             this.Controls.Add(this.BtnClose);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -546,6 +584,7 @@
             this.Controls.Add(this.BtnClear);
             this.Controls.Add(this.BtnStop);
             this.Controls.Add(this.BtnStart);
+            this.Controls.Add(this.BtnRoles);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -606,6 +645,9 @@
         private System.Windows.Forms.Button BtnToggle;
         private System.Windows.Forms.Button BtnImport;
         private System.Windows.Forms.OpenFileDialog OFD;
+        private System.Windows.Forms.CheckBox ChkExtraLog;
+        private System.Windows.Forms.Button BtnRoles;
+        private System.Windows.Forms.Button BtnSchedulesForm;
     }
 }
 

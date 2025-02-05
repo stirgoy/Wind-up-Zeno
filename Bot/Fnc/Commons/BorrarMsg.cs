@@ -16,7 +16,8 @@ namespace Wind_up_Zeno
             _ = Task.Run(async () =>
             {
                 await Task.Delay(tiempo * 1000);
-                try { await botMessage.DeleteAsync(); } catch (Exception ex) { await Log(ex.Message); }
+                await LogExtra($"Deleting message: {botMessage.Id}");
+                try { await botMessage.DeleteAsync(); } catch (Exception ex) { await LogError(ex.Message); }
             });
         }
     }

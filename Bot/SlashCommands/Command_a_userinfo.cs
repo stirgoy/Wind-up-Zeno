@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using System;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace Wind_up_Zeno
@@ -51,21 +53,52 @@ namespace Wind_up_Zeno
             string nik = sgu.Nickname;
             if (nik == null) { nik = "none"; }
             string avatarUrl = sgu.GetAvatarUrl(ImageFormat.Auto, 512);
+            string kuruj = "No data";
+            string kurus = "No data";
+
+            if (sgu.JoinedAt is DateTimeOffset sguj)
+            {
+                long ks = sguj.ToUnixTimeSeconds();
+                kuruj = $"<t:{ks}:f>";
+            }
+
+            if (sgu.CreatedAt is DateTimeOffset sgus)
+            {
+                long ks = sgus.ToUnixTimeSeconds();
+                kurus = $"<t:{ks}:f>";
+            }
 
             string admin = (sgu.GuildPermissions.Administrator) ? Emote.XD.GeenCircle : Emote.XD.RedCircle;
 
             var user_emb = new EmbedBuilder()
                 .WithTitle($"User information")
-                .AddField("Display name", $"{sgu.DisplayName}", true)
-                .AddField("Discord name", $"{sgu.Username}", true)
-                .AddField("Global name", $"{sgu.GlobalName}", true)
-                .AddField("Server name", $"{nik}", true)
-                .AddField("Is admin", admin, true)
+                .AddField("Display name", $"{sgu.DisplayName}")
+                .AddField("User name", $"{sgu.Username}")
+                .AddField("Global name", $"{sgu.GlobalName}")
+                .AddField("Server name", $"{nik}")
+                .AddField($"Join to Kuru", kuruj)
+                .AddField($"Join to Discord", kurus)
+                .AddField("Is admin", admin)
                 .AddField("Roles", $"{roleList}")
                 .WithThumbnailUrl(avatarUrl)
                 .WithFooter($" My enemy.")
                 .WithColor(Color.Orange)
                 .Build();
+            /*
+            var user_emb = new EmbedBuilder()
+                .WithTitle($"User information")
+                .AddField("Display name", $"{sgu.DisplayName}", true)
+                .AddField("User name", $"{sgu.Username}", true)
+                .AddField("Global name", $"{sgu.GlobalName}", true)
+                .AddField("Server name", $"{nik}", true)
+                .AddField($"Join to Kuru", kuruj, true)
+                .AddField($"Join to Discord", kurus, true)
+                .AddField("Is admin", admin, true)
+                .AddField("Roles", $"{roleList}")
+                .WithThumbnailUrl(avatarUrl)
+                .WithFooter($" My enemy.")
+                .WithColor(Color.Orange)
+                .Build();*/
 
             var m = await command.FollowupAsync("", embed: user_emb, ephemeral: true);
             BorrarMsg(m, 60);
